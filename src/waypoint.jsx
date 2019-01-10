@@ -10,6 +10,7 @@ import ensureChildrenIsValid from './ensureChildrenIsValid';
 import ensureRefIsUsedByChild from './ensureRefIsUsedByChild';
 import isDOMElement from './isDOMElement';
 import getCurrentPosition from './getCurrentPosition';
+import getCurrentProgress from './getCurrentProgress';
 import onNextTick from './onNextTick';
 import resolveScrollableAncestorProp from './resolveScrollableAncestorProp';
 
@@ -251,23 +252,6 @@ export default class Waypoint extends BaseClass {
       });
     }
   }
-
-  /**
-   * @param {object} bounds An object with bounds data for the waypoint and
-   *   scrollable parent
-   * @return {integer} The current scroll progress of the Waypoint inside of its
-   *  scrollable parent
-   **/
-  _getCurrentProgress({ viewportBottom, viewportTop, waypointBottom, waypointTop }) {
-    var viewportHeight = viewportBottom - viewportTop;
-    var waypointHeight = waypointBottom - waypointTop;
-    var distance = viewportHeight + waypointHeight;
-    var bottom = clamp(viewportBottom - waypointBottom, 0, distance);
-    var progress = (bottom / distance);
-    return clamp(Math.floor(progress * 100), 0, 100);
-  }
-
-
 
   _getBounds() {
     const horizontal = this.props.horizontal;

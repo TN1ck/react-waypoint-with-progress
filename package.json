@@ -1,6 +1,6 @@
 {
   "name": "react-waypoint-with-progress",
-  "version": "8.2.1",
+  "version": "8.3.2",
   "description": "A React component to execute a function whenever you scroll to an element.",
   "main": "cjs/index.js",
   "module": "es/index.js",
