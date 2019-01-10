@@ -1,8 +1,5 @@
 # React Waypoint
 
-[![npm version](https://badge.fury.io/js/react-waypoint.svg)](http://badge.fury.io/js/react-waypoint)
-[![Build Status](https://travis-ci.org/brigade/react-waypoint.svg?branch=master)](https://travis-ci.org/brigade/react-waypoint)
-
 A React component to execute a function whenever you scroll to an element. Works
 in all containers that can scroll, including the window.
 
@@ -26,19 +23,19 @@ Inspired by [Waypoints][waypoints], except this little library grooves the
 ### npm
 
 ```bash
-npm install react-waypoint --save
+npm install react-waypoint-with-progress --save
 ```
 
 ### yarn
 
 ```bash
-yarn add react-waypoint
+yarn add react-waypoint-with-progress
 ```
 
 ## Usage
 
 ```jsx
-import Waypoint from 'react-waypoint';
+import Waypoint from 'react-waypoint-with-progress';
 
 <Waypoint
   onEnter={this._handleWaypointEnter}
@@ -387,8 +384,8 @@ logs informing you about the internals of the waypoint.
 OPTION 2: Clone and modify the project locally.
 - clone this repo
 - add `console.log` or breakpoints where you think it would be useful.
-- `npm link` in the react-waypoint repo.
-- `npm link react-waypoint` in your project.
+- `npm link` in the react-waypoint-with-progress repo.
+- `npm link react-waypoint-with-progress` in your project.
 - if needed rebuild react-waypoint module: `npm run build-npm`
 
 ## Limitations
