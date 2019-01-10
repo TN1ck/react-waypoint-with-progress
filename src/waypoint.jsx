@@ -19,6 +19,7 @@ const defaultProps = {
   horizontal: false,
   onEnter() { },
   onLeave() { },
+  onProgress: null,
   onPositionChange() { },
   fireOnRapidScroll: true,
 };
@@ -194,11 +195,6 @@ export default class Waypoint extends BaseClass {
     // Save previous position as early as possible to prevent cycles
     this._previousPosition = currentPosition;
 
-    if (previousPosition === currentPosition) {
-      // No change since last trigger
-      return;
-    }
-
     const callbackArg = {
       currentPosition,
       previousPosition,
@@ -208,6 +204,17 @@ export default class Waypoint extends BaseClass {
       viewportTop: bounds.viewportTop,
       viewportBottom: bounds.viewportBottom,
     };
+
+    if (typeof this.props.onProgress === 'function') {
+          var progress = getCurrentProgress(bounds);
+          this.props.onProgress.call(this, Object.assign({}, callbackArg, { progress: progress }));
+        }
+
+    if (previousPosition === currentPosition) {
+      // No change since last trigger
+      return;
+    }
+
     this.props.onPositionChange.call(this, callbackArg);
 
     if (currentPosition === constants.inside) {
@@ -244,6 +251,23 @@ export default class Waypoint extends BaseClass {
       });
     }
   }
+
+  /**
+   * @param {object} bounds An object with bounds data for the waypoint and
+   *   scrollable parent
+   * @return {integer} The current scroll progress of the Waypoint inside of its
+   *  scrollable parent
+   **/
+  _getCurrentProgress({ viewportBottom, viewportTop, waypointBottom, waypointTop }) {
+    var viewportHeight = viewportBottom - viewportTop;
+    var waypointHeight = waypointBottom - waypointTop;
+    var distance = viewportHeight + waypointHeight;
+    var bottom = clamp(viewportBottom - waypointBottom, 0, distance);
+    var progress = (bottom / distance);
+    return clamp(Math.floor(progress * 100), 0, 100);
+  }
+
+
 
   _getBounds() {
     const horizontal = this.props.horizontal;
