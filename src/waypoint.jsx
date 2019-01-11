@@ -206,10 +206,10 @@ export default class Waypoint extends BaseClass {
       viewportBottom: bounds.viewportBottom,
     };
 
-    if (typeof this.props.onProgress === 'function') {
-          var progress = getCurrentProgress(bounds);
-          this.props.onProgress.call(this, Object.assign({}, callbackArg, { progress: progress }));
-        }
+    if (currentPosition === constants.inside && typeof this.props.onProgress === 'function') {
+      var progress = getCurrentProgress(bounds);
+      this.props.onProgress.call(this, Object.assign({}, callbackArg, { progress: progress }));
+    }
 
     if (previousPosition === currentPosition) {
       // No change since last trigger
