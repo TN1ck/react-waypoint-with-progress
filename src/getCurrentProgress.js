@@ -13,6 +13,6 @@ export default function getCurrentProgress({ viewportBottom, viewportTop, waypoi
   const waypointHeight = waypointBottom - waypointTop || 1;
   const distance = viewportHeight + waypointHeight;
   const traveled = waypointBottom - viewportTop;
-  const progress = (1 - clamp(traveled / distance, 0, 1)).toFixed(2);
+  const progress = 1 - clamp(traveled / distance, 0, 1);
   return progress;
 }
