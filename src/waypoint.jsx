@@ -20,7 +20,7 @@ const defaultProps = {
   horizontal: false,
   onEnter() { },
   onLeave() { },
-  onProgress: null,
+  onProgress() { },
   onPositionChange() { },
   fireOnRapidScroll: true,
 };
@@ -206,7 +206,7 @@ export default class Waypoint extends BaseClass {
       viewportBottom: bounds.viewportBottom,
     };
 
-    if (currentPosition === constants.inside && typeof this.props.onProgress === 'function') {
+    if (currentPosition === constants.inside) {
       var progress = getCurrentProgress(bounds);
       this.props.onProgress.call(this, Object.assign({}, callbackArg, { progress: progress }));
     }
@@ -222,6 +222,7 @@ export default class Waypoint extends BaseClass {
       this.props.onEnter.call(this, callbackArg);
     } else if (previousPosition === constants.inside) {
       this.props.onLeave.call(this, callbackArg);
+      this.props.onProgress.call(this, Object.assign({}, callbackArg, { progress: +(currentPosition === constants.above) }));
     }
 
     const isRapidScrollDown = previousPosition === constants.below &&
@@ -327,6 +328,7 @@ Waypoint.propTypes = {
   children: PropTypes.node,
   debug: PropTypes.bool,
   onEnter: PropTypes.func,
+  onProgress: PropTypes.func,
   onLeave: PropTypes.func,
   onPositionChange: PropTypes.func,
   fireOnRapidScroll: PropTypes.bool,
