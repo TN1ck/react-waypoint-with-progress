@@ -187,6 +187,7 @@ export default class Waypoint extends BaseClass {
     const bounds = this._getBounds();
     const currentPosition = getCurrentPosition(bounds);
     const previousPosition = this._previousPosition;
+    const previousProgress = this._previousProgress;
 
     if (process.env.NODE_ENV !== 'production' && this.props.debug) {
       debugLog('currentPosition', currentPosition);
@@ -208,6 +209,12 @@ export default class Waypoint extends BaseClass {
 
     if (currentPosition === constants.inside) {
       var progress = getCurrentProgress(bounds);
+      this._previousProgress = progress;
+
+      if (previousProgress === progress) {
+        return;
+      }
+
       this.props.onProgress.call(this, Object.assign({}, callbackArg, { progress: progress }));
     }
 
